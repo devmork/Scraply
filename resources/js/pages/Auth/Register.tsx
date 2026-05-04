@@ -12,14 +12,10 @@ import { Input } from "@/components/ui/input"
 import AuthLayout from "@/components/layout/AuthLayout"
 import { Link } from "@inertiajs/react"
 
-export function Register({
+export default function Register({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-    function route(arg0: string): string | undefined {
-        throw new Error("Function not implemented.")
-    }
-
   return (
     <AuthLayout>
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -38,13 +34,9 @@ export function Register({
                 <Input
                   id="email"
                   type="email"
-                  placeholder="m@example.com"
+                  placeholder="youremail@example.com"
                   required
                 />
-                <FieldDescription>
-                  We&apos;ll use this to contact you. We will not share your
-                  email with anyone else.
-                </FieldDescription>
               </Field>
               <Field>
                 <Field className="grid grid-cols-2 gap-4">
