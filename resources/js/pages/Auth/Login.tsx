@@ -16,10 +16,6 @@ export default function Login({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  function route(arg0: string): string | import("@inertiajs/core").UrlMethodPair | undefined {
-    throw new Error("Function not implemented.")
-  }
-
   return (
     <AuthLayout>
       <div className={cn("flex flex-col gap-6", className)} {...props}>
