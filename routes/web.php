@@ -23,8 +23,4 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', fn() => Inertia::render('profile/home'))->name('dashboard');
 });
 
-Route::inertia('/', 'home')->name('home');
-Route::inertia('/login', 'Auth/Login')->name('login');
-Route::inertia('/register', 'Auth/Register')->name('register');
-Route::inertia('/select-role', 'Auth/SelectRole');
 Route::inertia('/listings/create', 'Listings/Create')->name('listings.create');
