@@ -1,5 +1,4 @@
-import React, { useState } from "react"
-import { cn } from "@/lib/utils"
+import React, { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -10,18 +9,22 @@ import ListingLayout from "@/components/layout/ListingLayout"
 import { IconCheck, IconArrowLeft } from "@tabler/icons-react"
 
 interface ListingDetailsStepProps {
-  onNext?: (data: { quantity: number; unit: string; price: number; isFree: boolean }) => void
+  onNext?: (data: { quantity: number; unit: string; price: number; isFree: boolean; pickupDate: string; pickupTime: string }) => void
+  onDataChange?: (data: { quantity: number; price: number; isFree: boolean; pickupDate: string; pickupTime: string }) => void
   onBack?: () => void
   initialData?: {
     quantity?: number
     unit?: string
     price?: number
     isFree?: boolean
+    pickupDate?: string
+    pickupTime?: string
   }
 }
 
 export default function ListingDetailsStep({
   onNext,
+  onDataChange,
   onBack,
   initialData,
 }: ListingDetailsStepProps) {
@@ -29,6 +32,20 @@ export default function ListingDetailsStep({
   const [unit, setUnit] = useState<string>(initialData?.unit || "kg")
   const [price, setPrice] = useState<number>(initialData?.price || 0)
   const [isFree, setIsFree] = useState<boolean>(initialData?.isFree || false)
+  const [pickupDate, setPickupDate] = useState<string>(initialData?.pickupDate || "")
+  const [pickupTime, setPickupTime] = useState<string>(initialData?.pickupTime || "")
+
+  useEffect(() => {
+    onDataChange?.({
+      quantity,
+      price,
+      isFree,
+      pickupDate,
+      pickupTime,
+    })
+  }, [quantity, price, isFree, pickupDate, pickupTime, onDataChange])
+
+
 
   const handleContinue = () => {
     if (quantity <= 0) {
@@ -39,10 +56,20 @@ export default function ListingDetailsStep({
       alert("Please enter a valid price or select 'Offer for free/donation'")
       return
     }
-    onNext?.({ quantity, unit, price, isFree })
+    if (!pickupDate) {
+      alert("Please select a pickup date")
+      return
+    }
+    if (!pickupTime) {
+      alert("Please select a pickup time")
+      return
+    }
+    onNext?.({ quantity, unit, price, isFree, pickupDate, pickupTime })
   }
 
   const units = ["kg", "g", "lbs", "pieces", "pcs", "boxes", "bags", "liters"]
+
+
 
   return (
     <ListingLayout currentStep={2} totalSteps={3} onBack={onBack}>
@@ -129,6 +156,34 @@ export default function ListingDetailsStep({
                 }}
               />
             </div>
+
+            <Separator className="my-4" />
+
+            {/* Pickup Availability */}
+            <FieldGroup>
+              <FieldLabel className="text-base font-semibold">
+                PICKUP AVAILABILITY
+              </FieldLabel>
+              <div className="space-y-3">
+                {/* Date Input */}
+                <div>
+                  <Input
+                    type="date"
+                    value={pickupDate}
+                    onChange={(e) => setPickupDate(e.target.value)}
+                  />
+                </div>
+
+                {/* Time Input */}
+                <div>
+                  <Input
+                    type="time"
+                    value={pickupTime}
+                    onChange={(e) => setPickupTime(e.target.value)}
+                  />
+                </div>
+              </div>
+            </FieldGroup>
 
             <Separator className="my-4" />
 
