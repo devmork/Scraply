@@ -23,6 +23,10 @@ interface Photo {
 interface PhotoUploadStepProps {
   onNext?: (data: { photos: Photo[]; title: string }) => void
   onBack?: () => void
+  initialData?: {
+    photos?: Photo[]
+    title?: string
+  }
 }
 
 
@@ -30,8 +34,10 @@ interface PhotoUploadStepProps {
 export default function PhotoUploadStep({
   onNext,
   onBack,
+  initialData,
 }: PhotoUploadStepProps) {
-  const [photos, setPhotos] = useState<Photo[]>([])
+  const [photos, setPhotos] = useState<Photo[]>(initialData?.photos || [])
+  const [title, setTitle] = useState<string>(initialData?.title || "")
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null)
   const [draggedOverIndex, setDraggedOverIndex] = useState<number | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -125,10 +131,6 @@ export default function PhotoUploadStep({
     }
     onNext?.({ photos, title })
   }
-
-
-
-  const [title, setTitle] = useState<string>("")
 
   return (
     <ListingLayout currentStep={1} totalSteps={3} onBack={onBack}>
