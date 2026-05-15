@@ -20,3 +20,5 @@ Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', fn() => Inertia::render('AuthenticatedLayout'))->name('dashboard');
 });
+
+Route::inertia('/listings/create', 'Listings/Create')->name('listings.create');
