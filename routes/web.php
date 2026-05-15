@@ -6,7 +6,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\LoginController;
 
 // Public pages
-Route::get('/', fn() => Inertia::render('Home'))->name('home'); 
+Route::get('/', fn() => Inertia::render('GuessLayout'))->name('guess-layout'); 
 
 // Auth Routes
 Route::get('/login', [LoginController::class, 'create'])->name('login');
@@ -20,7 +20,7 @@ Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 
 // Protected routes (example)
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', fn() => Inertia::render('profile/home'))->name('dashboard');
+    Route::get('/dashboard', fn() => Inertia::render('AuthenticatedLayout'))->name('dashboard');
 });
 
 Route::inertia('/listings/create', 'Listings/Create')->name('listings.create');
