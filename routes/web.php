@@ -23,3 +23,4 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', fn() => Inertia::render('AuthenticatedLayout'))->name('dashboard');
 });
 
+Route::inertia('/listings/create', 'Listings/Create')->name('listings.create');
