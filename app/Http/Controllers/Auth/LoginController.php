@@ -23,7 +23,7 @@ class LoginController extends Controller
 
         if (Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
             $request->session()->regenerate();
-            return redirect()->intended(route('home'));   // Redirect to home after login
+            return redirect()->intended(route('dashboard'));   // Redirect to home after login
         }
 
         return back()->withErrors([
