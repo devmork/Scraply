@@ -13,6 +13,7 @@ Route::get('/login', [LoginController::class, 'create'])->name('login');
 Route::post('/login', [LoginController::class, 'store']);
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
 Route::post('/register', [RegisteredUserController::class, 'store']);
+
 Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 
 // Protected Routes
