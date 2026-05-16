@@ -18,6 +18,9 @@ Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 
 // Protected Routes
 Route::middleware('auth')->group(function () {
+    Route::middleware('auth')->group(function () {
+    Route::get('/role/select', fn() => Inertia::render('Auth/RoleSelect'))->name('role.select');
+});
     Route::get('/dashboard', fn() => Inertia::render('AuthenticatedLayout'))->name('dashboard');
 });
 

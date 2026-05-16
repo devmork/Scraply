@@ -25,10 +25,13 @@ class RegisteredUserController extends Controller
         $user = User::create([
             'name'     => $request->name ?? explode('@', $request->email)[0],
             'email'    => $request->email,
-            'password' => $request->password,        // No need for Hash::make() because of 'hashed' cast
+            'password' => $request->password,
+            'role'     => null,                    // Role will be set later
         ]);
 
         Auth::login($user);
 
-        return redirect()->route('home');    }
+        // Redirect to Role Selection page after registration
+        return redirect()->route('role.select');
+    }
 }
