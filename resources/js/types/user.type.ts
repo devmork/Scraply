@@ -1,11 +1,10 @@
-// resources/js/types/user.type.ts
 export type UserRole = "seller" | "collector" | "shop";
 
 export interface User {
   id: number;
   name: string;
   email: string;
-  role: UserRole;
+  role: UserRole | null;           // Allow null before role is chosen
   photo?: string | null;
   email_verified_at?: string | null;
   created_at?: string;
@@ -25,5 +24,5 @@ export interface User {
 }
 
 export interface AuthUser {
-  user: User;
+  user: User | null;
 }

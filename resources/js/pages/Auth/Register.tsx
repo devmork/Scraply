@@ -12,9 +12,11 @@ import {
 import { Input } from "@/components/ui/input";
 import AuthLayout from "@/components/layout/AuthLayout";
 import { Link, useForm } from "@inertiajs/react";
+import type { PageProps } from "@inertiajs/react";
 
-export default function Register() {
-  const { data, setData, post, processing, errors, reset } = useForm({
+export default function Register({ auth }: PageProps) {
+  
+  const { data, setData, post, processing, errors } = useForm({
     email: "",
     password: "",
     password_confirmation: "",
@@ -22,9 +24,7 @@ export default function Register() {
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    post("/register", {
-      onSuccess: () => reset(),
-    });
+    post("/register");
   };
 
   return (
@@ -41,7 +41,6 @@ export default function Register() {
                   </p>
                 </div>
 
-                {/* Email Field */}
                 <Field>
                   <FieldLabel htmlFor="email">Email</FieldLabel>
                   <Input
@@ -55,7 +54,6 @@ export default function Register() {
                   {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
                 </Field>
 
-                {/* Password Fields */}
                 <Field>
                   <div className="grid grid-cols-2 gap-4">
                     <Field>
@@ -89,7 +87,6 @@ export default function Register() {
                   <FieldDescription>Must be at least 8 characters long.</FieldDescription>
                 </Field>
 
-                {/* Submit Button */}
                 <Field>
                   <Button type="submit" disabled={processing} className="w-full">
                     {processing ? "Creating Account..." : "Create Account"}
@@ -98,18 +95,15 @@ export default function Register() {
 
                 <FieldSeparator>Or continue with</FieldSeparator>
 
-                {/* TODO: Add your social buttons here later */}
-
                 <FieldDescription className="text-center">
                   Already have an account? <Link href="/login">Sign in</Link>
                 </FieldDescription>
               </FieldGroup>
             </form>
 
-            {/* Right side image */}
             <div className="relative hidden bg-muted md:block">
               <img
-                src="/images/logo.jpg"
+                src="/placeholder.svg"
                 alt="Image"
                 className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
               />
