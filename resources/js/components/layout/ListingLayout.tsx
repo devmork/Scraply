@@ -17,28 +17,8 @@ export default function ListingLayout({
   return (
     <div className="min-h-screen bg-muted p-6 md:p-10">
       <div className="mx-auto w-full max-w-2xl">
-        {/* Header with back button and step counter */}
+        {/*step counter */}
         <div className="mb-8 flex items-center justify-between">
-          {currentStep > 1 ? (
-            <button
-              onClick={onBack}
-              className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path d="M19 12H5M12 19l-7-7 7-7" />
-              </svg>
-              Back
-            </button>
-          ) : (
-            <div />
-          )}
           <span className="text-xs font-semibold text-muted-foreground">
             STEP {currentStep} OF {totalSteps}
           </span>
