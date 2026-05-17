@@ -23,11 +23,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/role/store', [RegisterUserController::class, 'storeRole'])->name('role.store');
     Route::get('/dashboard', fn() => Inertia::render('AuthenticatedLayout'))->name('dashboard');
     Route::inertia('/profile', 'UserProfile/Profile')->name('profile');
+    // PostJunk API Route
+    Route::post('/api/create-junk', [PostJunkController::class, 'store']);
 });
 
 Route::inertia('/listings/create', 'Listings/Create')->name('listings.create');
 
-// PostJunk API Route
-Route::middleware('auth')->group(function () {
-    Route::post('/api/create-junk', [PostJunkController::class, 'store']);
-});
