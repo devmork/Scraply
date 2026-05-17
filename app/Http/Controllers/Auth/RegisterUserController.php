@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
-class RegisteredUserController extends Controller
+class RegisterUserController extends Controller
 {
     public function create()
     {
@@ -33,5 +33,18 @@ class RegisteredUserController extends Controller
 
         // Redirect to Role Selection page after registration
         return redirect()->route('role.select');
+    }
+
+    public function storeRole(Request $request)
+    {
+        $request->validate([
+            'role' => ['required', 'string', 'in:seller,collector,shop'],
+        ]);
+
+        $request->user()->update([
+            'role' => $request->role,
+        ]);
+
+        return redirect()->route('dashboard');
     }
 }
