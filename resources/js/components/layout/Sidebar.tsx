@@ -8,6 +8,7 @@ import {
   MessageSquare,
   User,
   LogOut,
+  Trash,
 } from "lucide-react";
 import { User as UserType } from "@/types/user.type";
 
@@ -26,9 +27,8 @@ export default function Sidebar() {
     switch (user.role) {
       case "seller":
         return [
-          { label: "Home", href: "/home", icon: Home },
-          { label: "My Listings", href: "/seller/listings", icon: Clipboard },
-          { label: "Messages", href: "/messages", icon: MessageSquare },
+          { label: "Home", href: "#", icon: Home },
+          { label: "My Junks", href: "#", icon: Trash },
           { label: "Profile", href: "/profile", icon: User },
         ];
       case "collector":
