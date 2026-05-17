@@ -22,6 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/role/select', fn() => Inertia::render('Auth/RoleSelect'))->name('role.select');
 });
     Route::get('/dashboard', fn() => Inertia::render('AuthenticatedLayout'))->name('dashboard');
+    Route::inertia('/profile', 'UserProfile/Profile')->name('profile');
 });
 
 Route::inertia('/listings/create', 'Listings/Create')->name('listings.create');
