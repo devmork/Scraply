@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Junk extends Model
 {
     protected $fillable = [
+        'user_id',
         'title',
         'quantity',
         'unit',
