@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import AuthLayout from "@/components/layout/AuthLayout"
-import { useState } from "react"
+import { useForm } from "@inertiajs/react"
 
 type Role = "seller" | "collector" | "shop" | null
 
@@ -10,12 +10,14 @@ export default function SelectRole({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const [selectedRole, setSelectedRole] = useState<Role>(null)
+  const { data, setData, post, processing, errors } = useForm({
+    role: null as Role,
+  })
 
-  const handleContinue = () => {
-    if (selectedRole) {
-      // This will handle role submission (backend integration later)
-      console.log("Selected role:", selectedRole)
+  const handleContinue = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (data.role) {
+      post("/role/store")
     }
   }
 
@@ -34,10 +36,10 @@ export default function SelectRole({
             <div className="grid gap-4 md:grid-cols-1">
               {/* Seller Role */}
               <button
-                onClick={() => setSelectedRole("seller")}
+                onClick={() => setData("role", "seller")}
                 className={cn(
                   "p-6 rounded-lg border-2 transition-all text-left",
-                  selectedRole === "seller"
+                  data.role === "seller"
                     ? "border-green-600 bg-green-50 dark:bg-green-950"
                     : "border-gray-200 hover:border-gray-300 dark:border-gray-700 dark:hover:border-gray-600"
                 )}
@@ -50,7 +52,7 @@ export default function SelectRole({
                       Post recyclables for pickup
                     </p>
                   </div>
-                  {selectedRole === "seller" && (
+                  {data.role === "seller" && (
                     <div className="w-6 h-6 rounded-full bg-green-600 flex items-center justify-center">
                       <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -62,10 +64,10 @@ export default function SelectRole({
 
               {/* Collector Role */}
               <button
-                onClick={() => setSelectedRole("collector")}
+                onClick={() => setData("role", "collector")}
                 className={cn(
                   "p-6 rounded-lg border-2 transition-all text-left",
-                  selectedRole === "collector"
+                  data.role === "collector"
                     ? "border-green-600 bg-green-50 dark:bg-green-950"
                     : "border-gray-200 hover:border-gray-300 dark:border-gray-700 dark:hover:border-gray-600"
                 )}
@@ -78,7 +80,7 @@ export default function SelectRole({
                       Find pickups near you
                     </p>
                   </div>
-                  {selectedRole === "collector" && (
+                  {data.role === "collector" && (
                     <div className="w-6 h-6 rounded-full bg-green-600 flex items-center justify-center">
                       <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -90,10 +92,10 @@ export default function SelectRole({
 
               {/* Shop Role */}
               <button
-                onClick={() => setSelectedRole("shop")}
+                onClick={() => setData("role", "shop")}
                 className={cn(
                   "p-6 rounded-lg border-2 transition-all text-left",
-                  selectedRole === "shop"
+                  data.role === "shop"
                     ? "border-green-600 bg-green-50 dark:bg-green-950"
                     : "border-gray-200 hover:border-gray-300 dark:border-gray-700 dark:hover:border-gray-600"
                 )}
@@ -106,7 +108,7 @@ export default function SelectRole({
                       Buy bulk recyclables
                     </p>
                   </div>
-                  {selectedRole === "shop" && (
+                  {data.role === "shop" && (
                     <div className="w-6 h-6 rounded-full bg-green-600 flex items-center justify-center">
                       <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -117,13 +119,15 @@ export default function SelectRole({
               </button>
             </div>
 
+            {errors.role && <p className="text-red-500 text-sm mt-4">{errors.role}</p>}
+
             <Button
               onClick={handleContinue}
-              disabled={!selectedRole}
+              disabled={!data.role || processing}
               className="w-full mt-8 bg-green-600 hover:bg-green-700"
               size="lg"
             >
-              Continue
+              {processing ? "Saving..." : "Continue"}
             </Button>
           </CardContent>
         </Card>
