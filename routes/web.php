@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\JunkListing\PostJunkController;
 
 // Public Routes
 Route::get('/', fn() => Inertia::render('GuessLayout'))->name('guess-layout'); 
@@ -25,3 +26,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::inertia('/listings/create', 'Listings/Create')->name('listings.create');
+
+// PostJunk API Route
+Route::middleware('auth')->group(function () {
+    Route::post('/api/create-junk', [PostJunkController::class, 'store']);
+});
