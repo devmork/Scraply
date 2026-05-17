@@ -15,7 +15,6 @@ interface ListingData {
   photos: Photo[]
   title?: string
   quantity?: number
-  unit?: string
   price?: number
   isFree?: boolean
   pickupDate?: string
@@ -39,7 +38,6 @@ export default function CreateListing() {
 
   const handleDetailsStepNext = (data: {
     quantity: number
-    unit: string
     price: number
     isFree: boolean
     pickupDate: string
@@ -67,11 +65,10 @@ export default function CreateListing() {
     }))
   }
 
-  const handlePreviewStepNext = (data: {
+  const handlePreviewStepNext = async (data: {
     photos: Photo[]
     title: string
     quantity: number
-    unit: string
     price: number
     isFree: boolean
     pickupAvailability: string
@@ -79,13 +76,41 @@ export default function CreateListing() {
     latitude?: number
     longitude?: number
   }) => {
-    setListingData((prev) => ({
-      ...prev,
-      ...data,
-    }))
-    // Submit to backend here
-    console.log("Complete listing data:", { ...listingData, ...data })
+    try {
+      const response = await fetch('/api/create-junk', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
+        },
+        body: JSON.stringify({
+          title: data.title,
+          quantity: data.quantity,
+          price: data.price,
+          isFree: data.isFree,
+          pickupAvailability: data.pickupAvailability,
+          pickupLocation: data.pickupLocation,
+          latitude: data.latitude,
+          longitude: data.longitude,
+        }),
+      })
+
+      if (!response.ok) {
+        const error = await response.json()
+        alert(error.message || 'Error posting listing')
+        return
+      }
+
+      const result = await response.json()
+      alert('Listing posted successfully!')
+      // Redirect to listings page or dashboard
+      window.location.href = '/listings'
+    } catch (error) {
+      console.error('Error posting listing:', error)
+      alert('Error posting listing')
+    }
   }
+
 
   const handleBack = () => {
     setListingData((prev) => ({
