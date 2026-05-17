@@ -26,7 +26,6 @@ interface ListingPreviewStepProps {
     photos: Photo[]
     title: string
     quantity: number
-    unit: string
     price: number
     isFree: boolean
     pickupAvailability: string
@@ -39,7 +38,6 @@ interface ListingPreviewStepProps {
     photos?: Photo[]
     title?: string
     quantity?: number
-    unit?: string
     price?: number
     isFree?: boolean
     pickupDate?: string
@@ -92,13 +90,12 @@ export default function ListingPreviewStep({
       photos: listingData.photos || [],
       title: listingData.title || "",
       quantity: listingData.quantity || 0,
-      unit: listingData.unit || "kg",
       price: listingData.price || 0,
       isFree: listingData.isFree || false,
-      pickupAvailability,
+      pickupAvailability: calculatePickupAvailability(),
       pickupLocation,
-      latitude,
-      longitude,
+      latitude: latitude || 6.9271,
+      longitude: longitude || 122.5449,
     })
   }
 
@@ -200,7 +197,7 @@ export default function ListingPreviewStep({
 
                   {/* Details */}
                   <div className="text-xs text-muted-foreground">
-                    <span>{listingData.quantity} {listingData.unit}</span>
+                    <span>{listingData.quantity}</span>
                     {!listingData.isFree && (
                       <>
                         {" "}·{" "}
