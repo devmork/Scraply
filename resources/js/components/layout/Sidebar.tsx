@@ -9,13 +9,14 @@ import {
   User,
   LogOut,
   Trash,
+  Plus,
 } from "lucide-react";
 import { User as UserType } from "@/types/user.type";
 
 export default function Sidebar() {
   const { auth } = usePage<{ auth: { user: UserType } }>().props;
   const user = auth?.user;
-  
+
   const currentPath = usePage().url;
 
   const isActive = (path: string) => currentPath === path || currentPath.startsWith(path + "/");
@@ -29,6 +30,7 @@ export default function Sidebar() {
         return [
           { label: "Home", href: "#", icon: Home },
           { label: "My Junks", href: "#", icon: Trash },
+          { label: "Post Junk", href: "/listings/create", icon: Plus },
           { label: "Profile", href: "/profile", icon: User },
         ];
       case "collector":
@@ -87,11 +89,10 @@ export default function Sidebar() {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                active
-                  ? "bg-green-50 text-green-700 font-medium"
-                  : "text-gray-700 hover:bg-gray-50"
-              }`}
+              className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${active
+                ? "bg-green-50 text-green-700 font-medium"
+                : "text-gray-700 hover:bg-gray-50"
+                }`}
             >
               <Icon className="w-5 h-5" />
               <span>{item.label}</span>
