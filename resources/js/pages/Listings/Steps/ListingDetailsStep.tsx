@@ -9,12 +9,11 @@ import ListingLayout from "@/components/layout/ListingLayout"
 import { IconCheck, IconArrowLeft } from "@tabler/icons-react"
 
 interface ListingDetailsStepProps {
-  onNext?: (data: { quantity: number; unit: string; price: number; isFree: boolean; pickupDate: string; pickupTime: string }) => void
+  onNext?: (data: { quantity: number; price: number; isFree: boolean; pickupDate: string; pickupTime: string }) => void
   onDataChange?: (data: { quantity: number; price: number; isFree: boolean; pickupDate: string; pickupTime: string }) => void
   onBack?: () => void
   initialData?: {
     quantity?: number
-    unit?: string
     price?: number
     isFree?: boolean
     pickupDate?: string
@@ -29,7 +28,6 @@ export default function ListingDetailsStep({
   initialData,
 }: ListingDetailsStepProps) {
   const [quantity, setQuantity] = useState<number>(initialData?.quantity || 0)
-  const [unit, setUnit] = useState<string>(initialData?.unit || "kg")
   const [price, setPrice] = useState<number>(initialData?.price || 0)
   const [isFree, setIsFree] = useState<boolean>(initialData?.isFree || false)
   const [pickupDate, setPickupDate] = useState<string>(initialData?.pickupDate || "")
@@ -49,7 +47,7 @@ export default function ListingDetailsStep({
 
   const handleContinue = () => {
     if (quantity <= 0) {
-      alert("Please enter a valid quantity")
+      alert("Quantity must be at least 1")
       return
     }
     if (!isFree && price <= 0) {
@@ -64,11 +62,8 @@ export default function ListingDetailsStep({
       alert("Please select a pickup time")
       return
     }
-    onNext?.({ quantity, unit, price, isFree, pickupDate, pickupTime })
+    onNext?.({ quantity, price, isFree, pickupDate, pickupTime })
   }
-
-  const units = ["kg", "g", "lbs", "pieces", "pcs", "boxes", "bags", "liters"]
-
 
 
   return (
@@ -97,19 +92,6 @@ export default function ListingDetailsStep({
                   step="0.1"
                   className="flex-1"
                 />
-
-                {/* PANG UNIT NI SYA NGA CODE */}
-                {/* <select
-                  value={unit}
-                  onChange={(e) => setUnit(e.target.value)}
-                  className="px-4 py-2 rounded-md border border-input bg-background text-foreground"
-                >
-                  {units.map((u) => (
-                    <option key={u} value={u}>
-                      {u}
-                    </option>
-                  ))}
-                </select> */}
 
               </div>
             </FieldGroup>
