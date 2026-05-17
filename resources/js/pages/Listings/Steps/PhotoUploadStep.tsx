@@ -129,6 +129,11 @@ export default function PhotoUploadStep({
       alert("Please upload at least one photo")
       return
     }
+    if (!title.trim()) {
+      alert("Please enter a title")
+      return
+    }
+
     onNext?.({ photos, title })
   }
 
