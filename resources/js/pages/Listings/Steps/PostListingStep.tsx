@@ -1,18 +1,18 @@
-import React, { useState } from "react"
-import { cn } from "@/lib/utils"
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Field, FieldLabel, FieldGroup } from "@/components/ui/field"
-import { Separator } from "@/components/ui/separator"
-
 import {
-  IconCheck,
+  FieldLabel,
+  FieldGroup
+} from "@/components/ui/field"
+import { Separator } from "@/components/ui/separator"
+import {
   IconArrowLeft,
   IconMapPin,
   IconCalendar,
-  IconTag,
 } from "@tabler/icons-react"
+
 
 interface Photo {
   id: string
