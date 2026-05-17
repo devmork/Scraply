@@ -71,7 +71,7 @@ export default function CreateListing() {
   }
 
   const handlePreviewStepNext = async (data: {
-    photos: Photo[]
+    // photos: Photo[]
     title: string
     quantity: number
     price: number
@@ -101,23 +101,6 @@ export default function CreateListing() {
       })
 
       if (!response.ok) {
-        // const contentType = response.headers.get('content-type')
-        // let errorMessage = 'Error posting listing'
-
-        // if (contentType?.includes('application/json')) {
-        //   try {
-        //     const error = await response.json()
-        //     errorMessage = error.message || errorMessage
-        //   } catch {
-        //     errorMessage = `Server error (${response.status})`
-        //   }
-        // } else {
-        //   errorMessage = `Server error (${response.status})`
-        // }
-
-        // alert(errorMessage)
-        // return
-
         const error = await response.json()
         alert(error.message || 'Error posting listing')
         return
@@ -126,7 +109,7 @@ export default function CreateListing() {
       const result = await response.json()
       alert('Listing posted successfully!')
       // Redirect to listings page or dashboard
-      window.location.href = '/listings'
+      window.location.href = '/listings/create'
     } catch (error) {
       console.error('Error posting listing:', error)
       alert('Error posting listing')
@@ -182,34 +165,6 @@ export default function CreateListing() {
         </ListingLayout>
       </main>
     </SidebarInset>
-
-
-
-
-    // <>
-    //   {listingData.step === 1 && (
-    //     <PhotoUploadStep
-    //       onNext={handlePhotoStepNext}
-    //       onBack={handleBack}
-    //       initialData={listingData}
-    //     />
-    //   )}
-    //   {listingData.step === 2 && (
-    //     <ListingDetailsStep
-    //       onNext={handleDetailsStepNext}
-    //       onBack={handleBack}
-    //       initialData={listingData}
-    //       onDataChange={handleDetailsDataChange}
-    //     />
-    //   )}
-    //   {listingData.step === 3 && (
-    //     <PostListingStep
-    //       onPost={handlePreviewStepNext}
-    //       onBack={handleBack}
-    //       listingData={listingData}
-    //     />
-    //   )}
-    // </>
   )
 }
 
