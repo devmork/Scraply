@@ -1,10 +1,7 @@
-import { Link, usePage } from "@inertiajs/react"
+import { usePage } from "@inertiajs/react"
 import {
-    LogOut,
     MapPin,
     ChevronLeft,
-    Bell,
-    Settings,
 } from "lucide-react"
 
 import {
@@ -14,6 +11,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { User as UserType } from "@/types/user.type"
 import AuthenticatedLayout from "@/pages/AuthenticatedLayout"
+import ProfileEditForm from "@/components/layout/ProfileEditLayout"
 
 type AuthProps = {
     auth?: {
@@ -53,25 +51,27 @@ function ProfileContent() {
                         <h1 className="text-xl font-bold tracking-tight">Profile</h1>
                     </div>
 
-                    <div className="flex items-center gap-1">
-                        <Button variant="ghost" size="icon-sm" className="text-slate-600">
-                            <Bell className="size-5" />
-                        </Button>
-                        <Button variant="ghost" size="icon-sm" className="text-slate-600">
-                            <Settings className="size-5" />
-                        </Button>
-                    </div>
+
                 </div>
             </header>
 
             <main className="w-full space-y-4 px-4 py-5 sm:px-6 sm:py-6 lg:px-8">
+                {/* Profile Info Section */}
                 <section className="rounded-2xl border border-slate-200 bg-white px-4 py-5 shadow-sm sm:px-5">
                     <div className="flex items-start gap-4">
                         <div className="flex size-16 shrink-0 items-center justify-center rounded-full bg-green-700 text-3xl font-semibold text-white">
-                            {getInitial(user?.name)}
+                            {user?.avatar_url ? (
+                                <img
+                                    src={user.avatar_url}
+                                    alt={user?.name}
+                                    className="h-full w-full rounded-full object-cover"
+                                />
+                            ) : (
+                                getInitial(user?.name)
+                            )}
                         </div>
 
-                        <div className="min-w-0">
+                        <div className="min-w-0 flex-1">
                             <h2 className="text-2xl font-semibold leading-tight">{user?.name || "Jose Dela Cruz"}</h2>
                             <div className="mt-2 inline-flex items-center rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold tracking-wider text-emerald-800">
                                 {getRoleLabel(user?.role)}
@@ -80,21 +80,21 @@ function ProfileContent() {
                                 <MapPin className="size-4 text-slate-500" />
                                 <span>{getAddress(user)}</span>
                             </div>
+                            <div className="mt-3">
+                                <p className="text-xs text-slate-500">Email: {user?.email}</p>
+                                {user?.phone && <p className="text-xs text-slate-500">Phone: {user.phone}</p>}
+                            </div>
                         </div>
                     </div>
                 </section>
 
-                <section className="rounded-2xl border border-slate-200 bg-white shadow-sm">
-                    <Link
-                        href="/logout"
-                        method="post"
-                        as="button"
-                        className="flex w-full items-center gap-3 px-4 py-4 text-base font-semibold text-red-600 transition-colors hover:bg-red-50"
-                    >
-                        <LogOut className="size-5" />
-                        Log out
-                    </Link>
+                {/* Edit Profile Section */}
+                <section className="rounded-2xl border border-slate-200 bg-white px-4 py-5 shadow-sm sm:px-5">
+                    <h3 className="mb-4 text-lg font-semibold">Account Settings</h3>
+                    <ProfileEditForm />
                 </section>
+
+
             </main>
         </SidebarInset>
     )
