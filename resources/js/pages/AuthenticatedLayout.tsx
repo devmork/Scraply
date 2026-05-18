@@ -106,7 +106,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
                         className={`w-full justify-start ${active ? "bg-green-50 text-green-700" : ""}`}
                       >
                         <Icon className="w-5 h-5" />
-                        <span>{item.label}</span>
+                        <span className="group-data-[collapsible=icon]:hidden">{item.label}</span>
                       </SidebarMenuButton>
                     </Link>
                   </SidebarMenuItem>
@@ -121,7 +121,7 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
               <div className="w-10 h-10 rounded-full bg-green-700 flex items-center justify-center text-white font-bold">
                 {user?.name?.charAt(0).toUpperCase()}
               </div>
-              <div className="flex-1 min-w-0">
+              <div className="flex-1 min-w-0 group-data-[collapsible=icon]:hidden">
                 <p className="font-semibold text-gray-900 truncate">{user?.name}</p>
                 <p className="text-xs text-gray-500 capitalize">{getRoleLabel()}</p>
               </div>
@@ -131,10 +131,10 @@ export default function AuthenticatedLayout({ children }: { children: React.Reac
               href="/logout"
               method="post"
               as="button"
-              className="w-full flex items-center justify-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors text-sm font-medium"
+              className="w-full flex items-center justify-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors text-sm font-medium group-data-[collapsible=icon]:px-2"
             >
               <LogOut className="w-4 h-4" />
-              <span>Sign out</span>
+              <span className="group-data-[collapsible=icon]:hidden">Sign out</span>
             </Link>
           </SidebarFooter>
         </Sidebar>
