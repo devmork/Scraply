@@ -68,19 +68,67 @@ export default function Sidebar() {
   const navItems = getNavItems();
 
   return (
-    <aside className="hidden lg:flex w-64 bg-white border-r border-gray-200 flex-col h-screen">
-      {/* Header */}
-      <div className="p-6 border-b border-gray-200">
-        <Link href="/home" className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-green-700 rounded flex items-center justify-center">
-            <span className="text-white font-bold text-lg">S</span>
-          </div>
-          <span className="text-lg font-bold text-green-700">Scraply</span>
-        </Link>
-      </div>
+    <>
+      {/* Desktop Sidebar - Hidden on mobile/tablet */}
+      <aside className="hidden lg:flex w-64 bg-white border-r border-gray-200 flex-col h-screen">
+        {/* Header */}
+        <div className="p-6 border-b border-gray-200">
+          <Link href="/home" className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-green-700 rounded flex items-center justify-center">
+              <span className="text-white font-bold text-lg">S</span>
+            </div>
+            <span className="text-lg font-bold text-green-700">Scraply</span>
+          </Link>
+        </div>
 
-      {/* Navigation */}
-      <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
+        {/* Navigation */}
+        <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            const active = isActive(item.href);
+
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${active
+                  ? "bg-green-50 text-green-700 font-medium"
+                  : "text-gray-700 hover:bg-gray-50"
+                  }`}
+              >
+                <Icon className="w-5 h-5" />
+                <span>{item.label}</span>
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* User Card - Footer */}
+        <div className="p-4 border-t border-gray-200">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 rounded-full bg-green-700 flex items-center justify-center text-white font-bold">
+              {user?.name?.charAt(0).toUpperCase()}
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="font-semibold text-gray-900 truncate">{user?.name}</p>
+              <p className="text-xs text-gray-500 capitalize">{getRoleLabel()}</p>
+            </div>
+          </div>
+
+          <Link
+            href="/logout"
+            method="post"
+            as="button"
+            className="w-full flex items-center justify-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors text-sm font-medium"
+          >
+            <LogOut className="w-4 h-4" />
+            <span>Sign out</span>
+          </Link>
+        </div>
+      </aside>
+
+      {/* Mobile Bottom Navigation - Visible only on small screens */}
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex items-center justify-around px-2 py-3">
         {navItems.map((item) => {
           const Icon = item.icon;
           const active = isActive(item.href);
@@ -89,40 +137,17 @@ export default function Sidebar() {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${active
-                ? "bg-green-50 text-green-700 font-medium"
-                : "text-gray-700 hover:bg-gray-50"
+              className={`flex flex-col items-center gap-1 px-3 py-2 rounded-lg transition-colors ${active
+                ? "text-green-700"
+                : "text-gray-600"
                 }`}
             >
-              <Icon className="w-5 h-5" />
-              <span>{item.label}</span>
+              <Icon className="w-6 h-6" />
+              <span className="text-xs font-medium">{item.label}</span>
             </Link>
           );
         })}
       </nav>
-
-      {/* User Card - Footer */}
-      <div className="p-4 border-t border-gray-200">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 rounded-full bg-green-700 flex items-center justify-center text-white font-bold">
-            {user?.name?.charAt(0).toUpperCase()}
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="font-semibold text-gray-900 truncate">{user?.name}</p>
-            <p className="text-xs text-gray-500 capitalize">{getRoleLabel()}</p>
-          </div>
-        </div>
-
-        <Link
-          href="/logout"
-          method="post"
-          as="button"
-          className="w-full flex items-center justify-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors text-sm font-medium"
-        >
-          <LogOut className="w-4 h-4" />
-          <span>Sign out</span>
-        </Link>
-      </div>
-    </aside>
+    </>
   );
 }
