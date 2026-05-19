@@ -5,11 +5,11 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
     server: {
-        host: process.env.VITE_HOST,
+        host: process.env.VITE_HOST || '127.0.0.1',
         port: 5173,
         strictPort: true,
         hmr: {
-            host: process.env.VITE_HMR_HOST,
+            host: process.env.VITE_HMR_HOST || 'localhost',
             port: 5173,
         },
         middlewareMode: false,
