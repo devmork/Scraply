@@ -103,7 +103,7 @@ export default function Register({ auth }: PageProps) {
 
             <div className="relative hidden bg-muted md:block">
               <img
-                src="/placeholder.svg"
+                src="/images/logo.jpg"  
                 alt="Image"
                 className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
               />
