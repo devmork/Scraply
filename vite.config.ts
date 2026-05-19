@@ -2,12 +2,15 @@ import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export default defineConfig({
     server: {
-        host: process.env.VITE_HOST || '127.0.0.1',
+        host: '0.0.0.0',
         port: 5173,
-        strictPort: true,
+        strictPort: false,
         hmr: {
             host: process.env.VITE_HMR_HOST || 'localhost',
             port: 5173,
