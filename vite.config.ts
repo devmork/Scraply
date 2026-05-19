@@ -5,17 +5,17 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
     server: {
-        host: '0.0.0.0',
+        host: process.env.VITE_HOST,
         port: 5173,
         strictPort: true,
         hmr: {
-            host: '192.168.1.173',
+            host: process.env.VITE_HMR_HOST,
             port: 5173,
         },
         middlewareMode: false,
         cors: true,
     },
-    plugins: [
+    plugins: [  
         tailwindcss(),
         laravel({
             input: 'resources/js/app.tsx',
